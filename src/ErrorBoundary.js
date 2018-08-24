@@ -18,7 +18,7 @@ class ErrorBoundary extends React.Component {
     render() {
       if (this.state.hasError) {
         
-        return <h1>Something went wrong while loading Google maps. Please check the url or your network connection.</h1>;
+        return <h2>Something went wrong while loading Google maps. Please check the url or your network connection.</h2>;
       }
       return this.props.children;
     }
