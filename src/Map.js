@@ -4,6 +4,7 @@ import iconMarker from "./icons/placeholder.png"; //Icon made by Freepik from ww
 import { withGoogleMap, GoogleMap, Marker, withScriptjs, InfoWindow } from 'react-google-maps';
 //import * as data from "./data/images.json";
 import background from "./icons/arxaia-ellada.png";
+const { compose, withStateHandlers, lifecycle } = require("recompose");
 
 const retroMap = require("./data/mapStyle.json"); //map style from: https://snazzymaps.com/style/1443/cleaner-midnight
 
@@ -12,7 +13,21 @@ class Map extends Component {
 
    render() {
     
-   const GoogleMapElement = withScriptjs(withGoogleMap(props =>
+   const GoogleMapElement = compose(
+    withStateHandlers(() => ({
+      isOpen: false,
+    }), {
+      onToggleOpen: ({ isOpen }) => () => ({
+        isOpen: !isOpen,
+      })
+    }),
+lifecycle({
+  componentDidMount() {
+  },
+}),
+    withScriptjs,
+    withGoogleMap
+  )(props =>
       <GoogleMap
         role="application"
         tabIndex='-1'
@@ -20,9 +35,7 @@ class Map extends Component {
         defaultCenter = { { lat: 37.971722, lng: 23.726382 } }
         defaultZoom = { 15 }
         onTilesLoaded={() =>
-          (document.querySelector("iframe").title = "Google map")
-        }
-        >
+          (document.querySelector("iframe").title = "Google map")}>
 
         {this.props.venues.map((venue, index) =>
         <Marker
@@ -32,7 +45,8 @@ class Map extends Component {
         icon={iconMarker}
         alt={`marker-icon of ${venue.name}`}
         position={{ lat: venue.location.lat, lng: venue.location.lng }} 
-        onClick={() => {this.props.toggleInfoWindow(index)}}
+        onClick={() => {this.props.toggleInfoWindow(index)}
+      }
         animation={this.props.selectedLocation === index ? window.google.maps.Animation.BOUNCE: window.google.maps.Animation.DROP}
         tabIndex='0'>
         
@@ -40,7 +54,9 @@ class Map extends Component {
  
         {this.props.selectedLocation === index && (
                     <InfoWindow
-                    onCloseClick={props.onToggleOpen}>
+                    onCloseClick={() => {
+                      props.onToggleOpen();
+                    }}>
                     <div className="info-window" aria-label="info-window" role="dialog">
                        <h3>{venue.name}</h3>
                       
@@ -56,7 +72,7 @@ class Map extends Component {
 
       )}
       </GoogleMap>
-   ));
+   );
    
    return(
       <div className="map">
@@ -64,13 +80,13 @@ class Map extends Component {
         <GoogleMapElement
           googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCju5TWpHsgFOnfVp10BnSjp7FBq4iBWOU&&v=3.exp&libraries=geometry,drawing,places"
           loadingElement={<div style={{ height: `100%` }} />}
-          containerElement={ <div style={{ height: `700px`, width: '100%' }} /> }
+          containerElement={ <div style={{ height: `680px`, width: '100%' }} /> }
           mapElement={ <div style={{ height: `100%` }} /> }
           tabIndex='-1'
         />
       </div>
       );
     }
-  };
+  }
 
 export default Map;
