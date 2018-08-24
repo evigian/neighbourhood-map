@@ -12,9 +12,10 @@ class App extends Component {
     this.state = {
       currentMenu: 'fallDown',
       side: 'left',
+      defaultCenter: {
       lat: 37.971722,
-      lng: 23.726382,
-      zoom: 14,
+      lng: 23.726382 },
+      defaultZoom: 16,
       venues: [],
       selectedVenue: {},
       query: "",
@@ -73,16 +74,23 @@ class App extends Component {
       <div id="outer-container" style={{height: '100%'}}>
       <main id="page-wrap">
       <div className="App" role="main">
-      <SideBar id={this.state.currentMenu} pageWrapId={'page-wrap'} outerContainerId={'outer-container'} tabIndex='0'
+      
+      <SideBar 
+      id={this.state.currentMenu} 
+      pageWrapId={'page-wrap'} 
+      outerContainerId={'outer-container'} 
+      tabIndex='0'
       venues = {this.state.venues}
       toggleInfoWindow = {this.toggleInfoWindow}
       updateLocations = {this.updateLocations}
       />
+      
         <header className="App-header"  role="banner">
         <div className="bm-burger-button" tabIndex='0'></div>
           <img src={photo} className="App-logo animated flipInX delay-2s" alt="neighbourhood in the historic center of Athens" tabIndex='0' aria-label="neighbourhood of Athens"/>
           <h1 className="App-title animated bounceInRight delay-2s" tabIndex='0'>ღ The historic center of Athens ღ</h1>
         </header>
+      
         <ErrorBoundary>
         <Map 
         venues = {this.state.queryResults}
@@ -90,10 +98,12 @@ class App extends Component {
         toggleInfoWindow = {this.toggleInfoWindow}
         />
         </ErrorBoundary>
+      
         <footer className="App-footer" role="contentinfo">
         <p>Created by Evi Giannakou for the FEND Google Developer Nanodegree Scholarship @ Udacity.<br /> 
            Map powered by Google Maps API & Map Details powered by FourSquare API.</p>
         </footer>
+      
       </div>
       </main>
       </div>
