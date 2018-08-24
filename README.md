@@ -23,6 +23,10 @@ In order to run the project in production mode:
 * open the server running: serve -s build
 * the command line will inform you that connections are being accepted at: http://localhost:5000/
 
+## Live page
+
+You can see the live page deployed on github-pages at the following address: https://evigian.github.io/neighbourhood-map/
+
 ## Important
 
 A service worker is registered but offline usage is only available in production mode.
