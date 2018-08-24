@@ -65,13 +65,6 @@ class App extends Component {
     })
   }
 
-  // handles keyboard press
-  handleKeyPress = (target, item, event) => {
-    if(item.charCode === 13){
-      this.locationItemClick(target, event);
-    }
-  }
-
 
   render() {
 
