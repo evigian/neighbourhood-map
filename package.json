@@ -10,7 +10,7 @@
     "react-burger-menu": "^2.5.2",
     "react-dom": "^16.4.1",
     "react-google-maps": "^9.4.5",
-    "react-scripts": "1.1.4",
+    "react-scripts": "5.0.1",
     "server": "^1.0.18",
     "sort-by": "^1.2.0"
   },
